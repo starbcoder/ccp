@@ -1,0 +1,143 @@
+👷 Builder's Day Hands-On: Lambda + SNS, Elastic Beanstalk & Lightsail
+🚀 PART A: SERVERLESS WITH LAMBDA + SNS
+
+🤖 AMAZON Q PROMPT FOR LAMBDA CODE
+```
+Create a Python 3.13 Lambda function that:
+1. Accepts an event with a "message" parameter
+2. Sends that message to an SNS topic using boto3
+3. Returns a success response with the message ID
+4. Includes proper error handling
+5. The SNS topic ARN should be passed as an environment variable named 'SNS_TOPIC_ARN'
+6. Include logging for debugging
+```
+
+🔐 Task One – Create IAM Role for Lambda
+Create IAM role named: `LambdaSNSRole`
+
+Trust policy: Lambda service
+
+Attach policies:
+- `AWSLambdaBasicExecutionRole` (for CloudWatch logs)
+- `AmazonSNSFullAccess` (for SNS publishing)
+
+Copy the Role ARN for later use
+
+📢 Task Two – Create SNS Topic
+Create SNS topic named: `BuildersDayNotifications`
+
+Note: Keep default settings
+
+Copy the Topic ARN for later use
+
+📧 Task Three – Subscribe to SNS Topic
+Subscribe to the SNS topic:
+
+Protocol: Email
+
+Endpoint: Your email address
+
+Confirm subscription via email when prompted
+
+✅ Status should show "Confirmed"
+
+⚡ Task Four – Create Lambda Function
+Function name: `NotificationSender`
+
+Runtime: Python 3.13
+
+Execution role: Use existing role `LambdaSNSRole`
+
+Environment variables:
+- Key: `SNS_TOPIC_ARN`
+- Value: [Your SNS Topic ARN from Task Two]
+
+Code: Use the code generated from Amazon Q prompt above
+
+🧪 Task Five – Test Lambda Function
+Create test event named: `TestNotification`
+
+Event JSON:
+```json
+{
+  "message": "Hello from Builder's Day Lambda function! 🎉"
+}
+```
+
+Execute test and verify:
+- Lambda function returns success
+- You receive email notification
+- Check CloudWatch logs for execution details
+
+🧹 Task Six – Cleanup Lambda & SNS
+Delete in this order:
+1. Lambda function: `NotificationSender`
+2. SNS subscription (unsubscribe from email)
+3. SNS topic: `BuildersDayNotifications`
+4. IAM role: `LambdaSNSRole`
+
+🌐 PART B: ELASTIC BEANSTALK NODE.JS APP
+
+🚀 Task Seven – Deploy to Elastic Beanstalk via Console
+Go to AWS Console → Elastic Beanstalk
+
+Click "Create application"
+
+Application information:
+- Application name: `BuildersDayApp`
+- Platform: Node.js
+- Platform branch: Node.js 18 (or latest available)
+- Platform version: Latest
+
+Application code:
+- Select "Sample application" (AWS provides a sample Node.js app)
+
+Configure more options:
+- Instance type: t3.micro (free tier eligible)
+- Keep all other defaults
+
+Click "Create application"
+
+Wait for environment to be created and show "Health: Ok"
+
+🧹 Task Nine – Cleanup Beanstalk
+Delete the Beanstalk environment:
+- Go to environment dashboard
+- Actions → Terminate environment
+- Type environment name to confirm
+- Wait for termination to complete
+
+Delete the application:
+- Go to applications list
+- Delete `BuildersDayApp`
+
+🏝️ PART C: LIGHTSAIL VPS
+
+💡 Task Ten – Create Lightsail Instance
+Instance name: `BuildersDayVPS`
+
+Instance location: Keep default (closest region)
+
+Blueprint: Node.js
+
+Instance plan: $3.50/month (smallest)
+
+Enable auto-snapshots: No (for this demo)
+
+Wait for instance to be "Running"
+
+🌍 Task Eleven – Verify Lightsail Access
+From Lightsail console, note the public IP address of your instance
+
+Open a web browser and navigate to: `http://[public-ip]`
+
+Verify you can access the default Node.js application page
+
+Note: The Node.js blueprint comes with a pre-configured web server
+
+🧹 Task Twelve – Cleanup Lightsail
+From Lightsail console:
+- Go to instances
+- Click on `BuildersDayVPS`
+- Delete instance
+- Confirm deletion
