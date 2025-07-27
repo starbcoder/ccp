@@ -146,10 +146,17 @@ Download any AWS architecture image and save it as `sample-image.jpg` in the dem
 5. **Confirm detachment**
 
 ### 4.2 Test Access (Should Fail)
-**This testing is done through the AWS Management Console - no CLI commands needed.**
-1. **Sign in as s3-user**
-2. **Try to access S3 bucket**
-3. **Expected Result:** Access Denied error
+**This testing is done through CloudShell**
+1. **Sign in as s3-user again**
+2. **Navigate to the CloudShell service**
+3. ```bash
+   aws sts get-caller-identity
+
+   aws s3api list-objects --bucket YOUR_S3_BUCKET
+
+   aws s3api get-object --bucket YOUR_S3_BUCKET --key dev/test-file.txt
+   ```
+4. **Expected Result:** Access Denied error
 
 ### 4.3 Create Bucket Policy (AWS Management Console)
 1. **Navigate to S3 service** (as admin user)
@@ -187,10 +194,17 @@ Download any AWS architecture image and save it as `sample-image.jpg` in the dem
 9. **Click "Save changes"**
 
 ### 4.4 Test Access (Should Work)
-**This testing is done through the AWS Management Console - no CLI commands needed.**
-1. **Sign in as s3-user**
-2. **Navigate to S3 bucket**
-3. **Expected Result:** You can access the bucket
+**This testing is done through CloudShell**
+1. **Sign in as s3-user again**
+2. **Navigate to the CloudShell service**
+3. ```bash
+   aws sts get-caller-identity
+
+   aws s3api list-objects --bucket YOUR_S3_BUCKET
+
+   aws s3api get-object --bucket YOUR_S3_BUCKET --key dev/test-file.txt
+   ```
+4. **Expected Result:** You can access the bucket
 
 ---
 
