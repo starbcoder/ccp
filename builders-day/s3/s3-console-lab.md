@@ -324,7 +324,7 @@ Download any AWS architecture image and save it as `sample-image.jpg` in the dem
 6. **Click "Create bucket"**
 
 ### 7.2 Create Replication Role (AWS Management Console)
-1. **We can ignore this as we are doing from the Management Console and a role would be created for us**
+1. **We can ignore this as we are doing it from the Management Console and an IAM role would be created for us**
 
 ### 7.3 Configure Replication (AWS Management Console)
 1. **Navigate to source bucket**
@@ -334,7 +334,7 @@ Download any AWS architecture image and save it as `sample-image.jpg` in the dem
 5. **Rule name:** `ReplicateAll`
 6. **Source:** Entire bucket
 7. **Destination:** Choose your replicated bucket
-8. **IAM role:** Select `S3ReplicationRole`
+8. **IAM role:** Select `Create new role`
 9. **Click "Create rule"**
 
 ### 7.4 Test Replication (AWS Management Console)
