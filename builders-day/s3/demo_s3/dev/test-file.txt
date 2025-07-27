@@ -1,0 +1,12 @@
+This is a test file for S3 Access Points demonstration.
+It will be used to test access point policies and permissions.
+File created for Builder's Day hands-on lab.
+
+Features to test:
+- Access point creation
+- Policy-based access control
+- Restricted folder access
+- Cross-account access patterns
+
+This file should only be accessible through the dev access point
+with the correct permissions applied. 
