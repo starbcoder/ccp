@@ -70,7 +70,14 @@ Download any AWS architecture image and save it as `sample-image.jpg` in the dem
 2. **Navigate to AWS Management Console**
 3. **Sign in with s3-user credentials:**
 4. **Try to access S3 service using CloudShell**
-5. **Expected Result:** Access Denied error
+5. ```bash
+   aws sts get-caller-identity
+
+   aws s3api list-objects --bucket YOUR_S3_BUCKET
+
+   aws s3api get-object --bucket YOUR_S3_BUCKET --key dev/test-file.txt
+   ```
+6. **Expected Result:** Access Denied error
 
 **Note:** All resource creation is done through the AWS Management Console. Only testing will be done via CloudShell CLI commands.
 
