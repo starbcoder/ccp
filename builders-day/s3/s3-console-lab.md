@@ -58,20 +58,17 @@ Download any AWS architecture image and save it as `sample-image.jpg` in the dem
 2. **Click "Users" → "Create user"**
 3. **User details:**
    - User name: `s3-user`
-   - Access type: **Programmatic access**
+   - Access type: **Management Console**
 4. **Click "Next: Permissions"**
 5. **Attach policies:**
-   - **Don't attach any policies yet** (we'll test access first)
+   - **Attach the AWSCloudShellFullAccess policy**
 6. **Click "Next: Tags" → "Next: Review" → "Create user"**
-7. **Save the Access Key ID and Secret Access Key**
 
 ### 2.3 Test User Access (Should Fail)
 1. **Open a new browser tab**
 2. **Navigate to AWS Management Console**
 3. **Sign in with s3-user credentials:**
-   - Use the Access Key ID as username
-   - Use the Secret Access Key as password
-4. **Try to access S3 service**
+4. **Try to access S3 service using CloudShell**
 5. **Expected Result:** Access Denied error
 
 **Note:** All resource creation is done through the AWS Management Console. Only testing will be done via CloudShell CLI commands.
