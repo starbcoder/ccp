@@ -122,11 +122,17 @@ Download any AWS architecture image and save it as `sample-image.jpg` in the dem
 6. **Click "Next: Review" → "Add permissions"**
 
 ### 3.3 Test Access (Should Work)
-**This testing is done through the AWS Management Console - no CLI commands needed.**
+**This testing is done through CloudShell**
 1. **Sign in as s3-user again**
-2. **Navigate to S3 service**
-3. **Click on your bucket name**
-4. **Expected Result:** You can see the bucket contents (empty)
+2. **Navigate to the CloudShell service**
+3. ```bash
+   aws sts get-caller-identity
+
+   aws s3api list-objects --bucket YOUR_S3_BUCKET
+
+   aws s3api get-object --bucket YOUR_S3_BUCKET --key dev/test-file.txt
+   ```
+4. **Expected Result:** You can see the bucket contents
 
 ---
 
