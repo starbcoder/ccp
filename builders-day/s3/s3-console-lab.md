@@ -52,6 +52,7 @@ Download any AWS architecture image and save it as `sample-image.jpg` in the dem
    - Bucket Versioning: **Disable** (we'll enable later)
    - Tags: Optional
 5. **Click "Create bucket"**
+6. Upload the files inside **demo_s3**
 
 ### 2.2 Create IAM User (AWS Management Console)
 1. **Navigate to IAM service**
