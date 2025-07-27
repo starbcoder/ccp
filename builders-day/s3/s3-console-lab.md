@@ -324,45 +324,7 @@ Download any AWS architecture image and save it as `sample-image.jpg` in the dem
 6. **Click "Create bucket"**
 
 ### 7.2 Create Replication Role (AWS Management Console)
-1. **Navigate to IAM service**
-2. **Click "Roles" → "Create role"**
-3. **Trusted entity:** AWS service
-4. **Service:** S3
-5. **Click "Next: Permissions"**
-6. **Create custom policy with this JSON:**
-```json
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": [
-                "s3:GetReplicationConfiguration",
-                "s3:ListBucket"
-            ],
-            "Resource": "arn:aws:s3:::your-unique-bucket-name"
-        },
-        {
-            "Effect": "Allow",
-            "Action": [
-                "s3:GetObjectVersion",
-                "s3:GetObjectVersionAcl"
-            ],
-            "Resource": "arn:aws:s3:::your-unique-bucket-name/*"
-        },
-        {
-            "Effect": "Allow",
-            "Action": [
-                "s3:ReplicateObject",
-                "s3:ReplicateDelete"
-            ],
-            "Resource": "arn:aws:s3:::your-unique-bucket-name-replicated/*"
-        }
-    ]
-}
-```
-7. **Role name:** `S3ReplicationRole`
-8. **Click "Create role"**
+1. **We can ignore this as we are doing from the Management Console and a role would be created for us**
 
 ### 7.3 Configure Replication (AWS Management Console)
 1. **Navigate to source bucket**
