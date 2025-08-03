@@ -187,7 +187,7 @@ This lab demonstrates:
 2. **Repeat the exact same process:**
    - Application name: `demo-app-west1`
    - Environment name: `demo-app-west1-env`
-   - Same settings: **High availability, Python platform**
+   - Same settings: **High availability, NodeJS platform**
 3. **Wait for deployment to complete**
 
 ### 5.3 Test Both Applications
@@ -374,5 +374,6 @@ This lab demonstrates:
 - CloudFront: Pay for data transfer and requests
 - Global Accelerator: Fixed hourly fee + premium data transfer
 - Choose based on use case: Static content = CloudFront, Dynamic apps = Global Accelerator
+
 
 **This lab demonstrates real-world content delivery and application acceleration scenarios that are essential for the Cloud Practitioner exam!** 🚀 
