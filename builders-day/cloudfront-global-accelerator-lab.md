@@ -207,7 +207,6 @@ This lab demonstrates:
 3. **Accelerator details:**
    - Name: `demo-multi-region-accelerator`
    - IP address type: **IPv4**
-   - Enabled: **Yes**
 
 4. **Click "Next"**
 
@@ -377,3 +376,4 @@ This lab demonstrates:
 
 
 **This lab demonstrates real-world content delivery and application acceleration scenarios that are essential for the Cloud Practitioner exam!** 🚀 
+
