@@ -85,7 +85,9 @@ This permits private VPC traffic from the EC2 instance to the RDS instance on po
 1. Console → EC2 → Instances → select `ccp-lab-ec2` → Connect → EC2 Instance Connect → Connect
 2. In the terminal, install MySQL client (Amazon Linux 2023):
 ```bash
-sudo dnf install -y mysql
+sudo dnf update -y
+sudo dnf install -y mariadb105
+mysql --version
 ```
 3. Set default region for AWS CLI (for later DynamoDB steps):
 ```bash
@@ -211,5 +213,6 @@ Perform cleanup to avoid charges.
 - You created a table with four columns and performed CRUD with MySQL client
 - You created a DynamoDB table and performed CRUD via AWS CLI from EC2 using an IAM role
 - You cleaned up all resources
+
 
 
