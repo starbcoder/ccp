@@ -52,27 +52,32 @@ Download any AWS architecture image and save it as `sample-image.jpg` in the dem
    - Bucket Versioning: **Disable** (we'll enable later)
    - Tags: Optional
 5. **Click "Create bucket"**
+6. Upload the files inside **demo_s3**
 
 ### 2.2 Create IAM User (AWS Management Console)
 1. **Navigate to IAM service**
 2. **Click "Users" → "Create user"**
 3. **User details:**
    - User name: `s3-user`
-   - Access type: **Programmatic access**
+   - Access type: **Management Console**
 4. **Click "Next: Permissions"**
 5. **Attach policies:**
-   - **Don't attach any policies yet** (we'll test access first)
+   - **Attach the AWSCloudShellFullAccess policy**
 6. **Click "Next: Tags" → "Next: Review" → "Create user"**
-7. **Save the Access Key ID and Secret Access Key**
 
 ### 2.3 Test User Access (Should Fail)
 1. **Open a new browser tab**
 2. **Navigate to AWS Management Console**
 3. **Sign in with s3-user credentials:**
-   - Use the Access Key ID as username
-   - Use the Secret Access Key as password
-4. **Try to access S3 service**
-5. **Expected Result:** Access Denied error
+4. **Try to access S3 service using CloudShell**
+5. ```bash
+   aws sts get-caller-identity
+
+   aws s3api list-objects --bucket YOUR_S3_BUCKET
+
+   aws s3api get-object --bucket YOUR_S3_BUCKET --key dev/test-file.txt
+   ```
+6. **Expected Result:** Access Denied error
 
 **Note:** All resource creation is done through the AWS Management Console. Only testing will be done via CloudShell CLI commands.
 
@@ -117,11 +122,17 @@ Download any AWS architecture image and save it as `sample-image.jpg` in the dem
 6. **Click "Next: Review" → "Add permissions"**
 
 ### 3.3 Test Access (Should Work)
-**This testing is done through the AWS Management Console - no CLI commands needed.**
+**This testing is done through CloudShell**
 1. **Sign in as s3-user again**
-2. **Navigate to S3 service**
-3. **Click on your bucket name**
-4. **Expected Result:** You can see the bucket contents (empty)
+2. **Navigate to the CloudShell service**
+3. ```bash
+   aws sts get-caller-identity
+
+   aws s3api list-objects --bucket YOUR_S3_BUCKET
+
+   aws s3api get-object --bucket YOUR_S3_BUCKET --key dev/test-file.txt
+   ```
+4. **Expected Result:** You can see the bucket contents
 
 ---
 
@@ -135,10 +146,17 @@ Download any AWS architecture image and save it as `sample-image.jpg` in the dem
 5. **Confirm detachment**
 
 ### 4.2 Test Access (Should Fail)
-**This testing is done through the AWS Management Console - no CLI commands needed.**
-1. **Sign in as s3-user**
-2. **Try to access S3 bucket**
-3. **Expected Result:** Access Denied error
+**This testing is done through CloudShell**
+1. **Sign in as s3-user again**
+2. **Navigate to the CloudShell service**
+3. ```bash
+   aws sts get-caller-identity
+
+   aws s3api list-objects --bucket YOUR_S3_BUCKET
+
+   aws s3api get-object --bucket YOUR_S3_BUCKET --key dev/test-file.txt
+   ```
+4. **Expected Result:** Access Denied error
 
 ### 4.3 Create Bucket Policy (AWS Management Console)
 1. **Navigate to S3 service** (as admin user)
@@ -176,10 +194,17 @@ Download any AWS architecture image and save it as `sample-image.jpg` in the dem
 9. **Click "Save changes"**
 
 ### 4.4 Test Access (Should Work)
-**This testing is done through the AWS Management Console - no CLI commands needed.**
-1. **Sign in as s3-user**
-2. **Navigate to S3 bucket**
-3. **Expected Result:** You can access the bucket
+**This testing is done through CloudShell**
+1. **Sign in as s3-user again**
+2. **Navigate to the CloudShell service**
+3. ```bash
+   aws sts get-caller-identity
+
+   aws s3api list-objects --bucket YOUR_S3_BUCKET
+
+   aws s3api get-object --bucket YOUR_S3_BUCKET --key dev/test-file.txt
+   ```
+4. **Expected Result:** You can access the bucket
 
 ---
 
@@ -299,45 +324,7 @@ Download any AWS architecture image and save it as `sample-image.jpg` in the dem
 6. **Click "Create bucket"**
 
 ### 7.2 Create Replication Role (AWS Management Console)
-1. **Navigate to IAM service**
-2. **Click "Roles" → "Create role"**
-3. **Trusted entity:** AWS service
-4. **Service:** S3
-5. **Click "Next: Permissions"**
-6. **Create custom policy with this JSON:**
-```json
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": [
-                "s3:GetReplicationConfiguration",
-                "s3:ListBucket"
-            ],
-            "Resource": "arn:aws:s3:::your-unique-bucket-name"
-        },
-        {
-            "Effect": "Allow",
-            "Action": [
-                "s3:GetObjectVersion",
-                "s3:GetObjectVersionAcl"
-            ],
-            "Resource": "arn:aws:s3:::your-unique-bucket-name/*"
-        },
-        {
-            "Effect": "Allow",
-            "Action": [
-                "s3:ReplicateObject",
-                "s3:ReplicateDelete"
-            ],
-            "Resource": "arn:aws:s3:::your-unique-bucket-name-replicated/*"
-        }
-    ]
-}
-```
-7. **Role name:** `S3ReplicationRole`
-8. **Click "Create role"**
+1. **We can ignore this as we are doing it from the Management Console and an IAM role would be created for us**
 
 ### 7.3 Configure Replication (AWS Management Console)
 1. **Navigate to source bucket**
@@ -347,7 +334,7 @@ Download any AWS architecture image and save it as `sample-image.jpg` in the dem
 5. **Rule name:** `ReplicateAll`
 6. **Source:** Entire bucket
 7. **Destination:** Choose your replicated bucket
-8. **IAM role:** Select `S3ReplicationRole`
+8. **IAM role:** Select `Create new role`
 9. **Click "Create rule"**
 
 ### 7.4 Test Replication (AWS Management Console)
