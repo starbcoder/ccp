@@ -124,7 +124,6 @@ Every route table should also have the implicit local route `10.0.0.0/22 → loc
 2. Name: `ec2-private-sg` | VPC: `TikTokDemoVPC`
 3. Inbound rules:
    - SSH (22) → Source: `ec2-instance-connect-sg` (select the SG as source)
-   - HTTP (80) → Source: `10.0.0.0/22`
 4. Outbound: leave default (All traffic)
 
 ### 5.2 `ec2-instance-connect-sg`
