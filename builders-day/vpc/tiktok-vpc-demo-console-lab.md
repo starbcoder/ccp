@@ -181,7 +181,7 @@ Wait for status Available.
 ## Task 9: Validate Routing
 1. From instance shell:
 ```bash
-curl -I https://aws.amazon.com
+curl -I https://www.google.com
 ```
 2. Should succeed via NAT in its AZ (PrivateSubnet2 → `nat-xxx2`).
 
