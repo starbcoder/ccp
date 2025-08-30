@@ -1,0 +1,65 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Description: 'Simple S3 bucket with configurable name and versioning'
+
+Parameters:
+  BucketName:
+    Type: String
+    Default: 'my-demo-bucket'
+    Description: 'Name for the S3 bucket'
+  
+  Environment:
+    Type: String
+    Default: 'dev'
+    AllowedValues: [dev, prod]
+
+Mappings:
+  EnvConfig:
+    dev:
+      Versioning: Suspended
+    prod:
+      Versioning: Enabled
+
+Conditions:
+  IsProduction: !Equals [!Ref Environment, prod]
+
+Resources:
+  MyS3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub '${BucketName}-${Environment}'
+      VersioningConfiguration:
+        Status: !FindInMap [EnvConfig, !Ref Environment, Versioning]
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+      Tags:
+        - Key: Environment
+          Value: !Ref Environment
+
+  BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref MyS3Bucket
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Deny
+            Principal: '*'
+            Action: 's3:*'
+            Resource:
+              - !GetAtt MyS3Bucket.Arn
+              - !Join ['', [!GetAtt MyS3Bucket.Arn, '/*']]
+            Condition:
+              Bool:
+                'aws:SecureTransport': false
+
+Outputs:
+  BucketName:
+    Description: 'Created bucket name'
+    Value: !Ref MyS3Bucket
+    Export:
+      Name: !Sub '${AWS::StackName}-Bucket'
+  
+  BucketArn:
+    Description: 'Bucket ARN'
+    Value: !GetAtt MyS3Bucket.Arn
