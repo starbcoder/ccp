@@ -76,14 +76,12 @@ This allows the EC2 Instance Connect Endpoint to initiate SSH to the instance.
 ---
 
 ## Task 4: Create EC2 Instance Connect Endpoint (EICE)
-1. VPC → Endpoints → Create endpoint
-2. Service category: AWS services
-3. Search for `ec2-instance-connect` → choose `com.amazonaws.<region>.ec2-instance-connect`
-4. VPC: Default VPC
-5. Subnets: select `PrivateSubnet-NoIGW`
-6. Security group: `eice-sg`
-7. Policy: Note that EICE does not support endpoint policies (option not shown)
-8. Create endpoint and wait for status `Available`
+1. VPC → Endpoints → Choose EC2 Instance Connect Endpoint
+2. VPC: Default VPC
+3. Subnets: select `PrivateSubnet-NoIGW`
+4. Security group: `eice-sg`
+5. Policy: Note that EICE does not support endpoint policies (option not shown)
+6. Create endpoint and wait for status `Available`
 
 ---
 
