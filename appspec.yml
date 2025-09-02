@@ -1,0 +1,23 @@
+version: 0.0
+os: linux
+files:
+  - source: builders-day/s3/demo_s3/index.html
+    destination: /var/www/html/
+  - source: builders-day/s3/demo_s3/error.html
+    destination: /var/www/html/
+  - source: builders-day/s3/demo_s3/sample-image.jpg
+    destination: /var/www/html/
+hooks:
+  BeforeInstall:
+    - location: scripts/install_dependencies.sh
+      timeout: 300
+      runas: root
+    - location: scripts/start_server.sh
+      timeout: 300
+      runas: root
+  ApplicationStop:
+    - location: scripts/stop_server.sh
+      timeout: 300
+      runas: root
+
+# check /var/log/aws/codedeploy-agent/codedeploy-agent.log for errors

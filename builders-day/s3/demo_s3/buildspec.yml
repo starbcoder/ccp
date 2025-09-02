@@ -1,0 +1,56 @@
+version: 0.2
+
+# BuildSpec for deploying static website to S3 and invalidating CloudFront
+# Environment variables required:
+# - S3_BUCKET: The S3 bucket name
+# - CLOUDFRONT_DISTRIBUTION_ID: CloudFront distribution ID (optional)
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.11
+    commands:
+      - echo "Installing AWS CLI..."
+      - pip install --upgrade awscli
+      
+  pre_build:
+    commands:
+      - echo "Pre-build phase started on `date`"
+      - echo "Checking AWS CLI version..."
+      - aws --version
+      - echo "Verifying S3 bucket access..."
+      - aws s3 ls s3://$S3_BUCKET/ || echo "Bucket might be empty or first deployment"
+      
+  build:
+    commands:
+      - echo "Build phase started on `date`"
+      - 'echo "Current directory contents:"'
+      - ls -la
+      - 'echo "Uploading files to S3 bucket: $S3_BUCKET"'
+      # Upload the 3 specific files with proper content types
+      - aws s3 cp builders-day/s3/demo_s3/index.html s3://$S3_BUCKET/index.html --content-type "text/html"
+      - aws s3 cp builders-day/s3/demo_s3/error.html s3://$S3_BUCKET/error.html --content-type "text/html"
+      - aws s3 cp builders-day/s3/demo_s3/sample-image.jpg s3://$S3_BUCKET/sample-image.jpg --content-type "image/jpeg"
+      
+  post_build:
+    commands:
+      - echo "Post-build phase started on `date`"
+      - echo "S3 sync completed successfully"
+      - |
+        if [ ! -z "$CLOUDFRONT_DISTRIBUTION_ID" ]; then
+          echo "Invalidating CloudFront distribution: $CLOUDFRONT_DISTRIBUTION_ID"
+          aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION_ID --paths "/*"
+          echo "CloudFront invalidation initiated"
+        else
+          echo "No CloudFront distribution ID provided, skipping invalidation"
+        fi
+
+artifacts:
+  files:
+    - '**/*'
+  exclude-paths:
+    - buildspec.yml
+    - appspec.yml
+    - scripts/*
+    - .git/**/*
+
